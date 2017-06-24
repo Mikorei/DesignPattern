@@ -1,0 +1,13 @@
+public class DataSetObservable extends Observable<DataSetObserver> {  
+    /**  
+     * 数据发生变化时，通知所有的观察者  
+     */ 
+    public void notifyChanged() {  
+        synchronized(mObservers) {  
+            for (DataSetObserver observer : mObservers) {  
+                observer.onChanged();  
+            }  
+        }  
+    }  
+    //... ... (其他方法)  
+}  
