@@ -1,0 +1,40 @@
+public abstract class AbstractCursor {  
+    //定义管理器  
+    DataSetObservable mDataSetObservable = new DataSetObservable();  
+    ContentObservable mContentObservable = new ContentObservable();  
+       
+    //注册和卸载两类观察者  
+    public void registerContentObserver(ContentObserver observer) {  
+        mContentObservable.registerObserver(observer);  
+    }  
+   
+    public void unregisterContentObserver(ContentObserver observer) {  
+        // cursor will unregister all observers when it close  
+        if (!mClosed) {  
+            mContentObservable.unregisterObserver(observer);  
+        }  
+    }  
+   
+    public void registerDataSetObserver(DataSetObserver observer) {  
+        mDataSetObservable.registerObserver(observer);  
+           
+    }  
+   
+    public void unregisterDataSetObserver(DataSetObserver observer) {  
+        mDataSetObservable.unregisterObserver(observer);  
+    }  
+   
+    //2类通知方法  
+    protected void onChange(boolean selfChange) {  
+        synchronized (mSelfObserverLock) {  
+            mContentObservable.dispatchChange(selfChange);  
+            if (mNotifyUri != null && selfChange) {  
+                mContentResolver.notifyChange(mNotifyUri, mSelfObserver);  
+            }  
+        }  
+    }  
+   
+    protected void notifyDataSetChange() {  
+        mDataSetObservable.notifyChanged();  
+    }  
+}  
