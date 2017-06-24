@@ -1,0 +1,5 @@
+public abstract class DataSetObserver {  
+    public void onChanged() {  
+        // Do nothing  
+    }  
+}  
