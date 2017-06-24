@@ -1,0 +1,11 @@
+public class AlphabetIndexer extends DataSetObserver{  
+    /*  
+     * @hide 被android系统隐藏起来了  
+     */ 
+    @Override 
+    public void onChanged() {  
+        //观察到数据变化，观察者做自己该做的事情  
+        super.onChanged();  
+        mAlphaMap.clear();  
+    }  
+}  
